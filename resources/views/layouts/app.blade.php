@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<body class="bg-gray-100 min-h-screen">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<!-- TOP NAVBAR -->
+<header class="bg-indigo-600 text-black shadow">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+        <!-- LEFT -->
+        <div class="flex items-center gap-6">
+            <span class="text-xl font-bold">🎫 Ticket System</span>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <a href="{{ route('dashboard') }}"
+               class="hover:underline">
+               Dashboard
+            </a>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <a href="#"
+               class="hover:underline">
+               Data Tiket
+            </a>
         </div>
-    </body>
+
+        <!-- RIGHT -->
+        <div class="flex items-center gap-4">
+
+            @auth
+                <span class="text-sm opacity-90">
+                    {{ auth()->user()->name }}
+                </span>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition">
+                        Logout
+                    </button>
+                </form>
+            @endauth
+
+        </div>
+    </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="max-w-7xl mx-auto p-6">
+    @yield('content')
+</main>
+
+</body>
 </html>
