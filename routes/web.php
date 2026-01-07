@@ -20,6 +20,10 @@ Route::middleware(['auth'])->group(function () {
 /* ADMIN */
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::patch('/tickets/{ticket}/status', 
+        [TicketController::class, 'updateStatus']
+    )->name('tickets.updateStatus');
 });
 
 /* MAHASISWA */
@@ -28,3 +32,16 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
 });
 require __DIR__.'/auth.php';
+
+
+/*ticket */
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])
+        ->name('tickets.show');
+});
+
+Route::get('/tickets', [TicketController::class, 'index'])
+    ->name('tickets.index');

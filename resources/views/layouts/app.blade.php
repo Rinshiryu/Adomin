@@ -8,50 +8,55 @@
 
 <body class="bg-gray-100 min-h-screen">
 
-<!-- TOP NAVBAR -->
-<header class="bg-indigo-600 text-black shadow">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex min-h-screen">
 
-        <!-- LEFT -->
-        <div class="flex items-center gap-6">
-            <span class="text-xl font-bold">🎫 Ticket System</span>
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-slate-900 text-white flex flex-col">
 
+        <!-- LOGO / TITLE -->
+        <div class="px-6 py-4 text-xl font-bold border-b border-slate-700">
+            🎫 Adomin
+        </div>
+
+        <!-- MENU -->
+        <nav class="flex-1 px-4 py-6 space-y-2">
             <a href="{{ route('dashboard') }}"
-               class="hover:underline">
-               Dashboard
+               class="block px-4 py-2 rounded-md hover:bg-slate-800 transition">
+                Dashboard
             </a>
 
-            <a href="#"
-               class="hover:underline">
-               Data Tiket
+            <a href="{{ route('tickets.index') }}"
+            class="block px-4 py-2 rounded-md hover:bg-slate-800 transition">
+                Ticket Mahasiswa
             </a>
+        </nav>
+
+        <!-- USER + LOGOUT -->
+        <div class="px-4 py-4 border-t border-slate-700">
+            <div class="text-sm mb-2 text-slate-300">
+                {{ auth()->user()->name ?? '' }}
+            </div>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button
+                    type="submit"
+                    class="w-full bg-red-600 py-2 rounded-md hover:bg-red-700 transition text-sm">
+                    Logout
+                </button>
+            </form>
         </div>
 
-        <!-- RIGHT -->
-        <div class="flex items-center gap-4">
+    </aside>
 
-            @auth
-                <span class="text-sm opacity-90">
-                    {{ auth()->user()->name }}
-                </span>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="bg-red-500 px-3 py-1 rounded hover:bg-red-600 transition">
-                        Logout
-                    </button>
-                </form>
-            @endauth
-
+    <!-- CONTENT -->
+    <main class="flex-1 p-8">
+        <div class="bg-white rounded-xl shadow p-6">
+            @yield('content')
         </div>
-    </div>
-</header>
+    </main>
 
-<!-- PAGE CONTENT -->
-<main class="max-w-7xl mx-auto p-6">
-    @yield('content')
-</main>
+</div>
 
 </body>
 </html>

@@ -13,9 +13,9 @@ class DashboardController extends Controller
 
     return view('admin.dashboard', [
         'tickets' => $tickets,
-        'total' => Ticket::count(),
-        'open' => Ticket::where('status', 'open')->count(),
-        'closed' => Ticket::where('status', 'closed')->count(),
+        'openCount' => Ticket::where('status', 'open')->count(),
+        'in_progressCount' => Ticket::where('status', 'in_progress')->count(),
+        'closedCount' => Ticket::where('status', 'closed')->count(),
     ]);
     }
 }
